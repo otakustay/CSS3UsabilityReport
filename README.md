@@ -17,7 +17,49 @@
 
 评价从多个方面进行，首先满分为10分，并按以下规则进行相应的计算：
 
-[规则制定中……]
+    // 截止2011年6月
+    var browsers = ['IE6', 'IE7', 'IE8', 'Firefox 3.6', 'Firefox 4.0', 'Firefox 5.0', 'Chrome'];
+    var total = browsers.length * 3;
+    var sum = 0;
+    for (var i = 0; i < browsers.length; i++) {
+        var browser = browsers[i];
+        var mark = 3;
+        if (!isSupportedBy(browser)) {
+            mark = 0;
+            // 可以通过其他CSS样式模拟
+            if (canSimulateByCSS()) {
+                // 模拟后不影响DOM结构
+                if (isDOMIdentical()) {
+                    mark += 1;
+                }
+                // 模拟后不影响视觉效果
+                if (isVisuallyIdentical()) {
+                    mark += 1;
+                    // 模拟后不影响交互效果
+                    if (isInteractivelyIdentical()) {
+                        mark += 1;
+                    }
+                }
+            }
+            // 可以通过javascript计算模拟
+            else if (canSimulateByJavascript()) {
+                // 模拟不影响DOM结构
+                if (isDOMIdentical()) {
+                    mark += 1;
+                }
+                // 如果javascript一次执行可适应未来DOM变动
+                if (isPermanentlyEffective()) {
+                    mark += 1;
+                }
+            }
+        }
+        sum += mark;
+    }
+
+    // 按满分10分，等比计算，保留1位小数
+    var result = ((sum / total) * 10).toFixed(1);
+    // 星级按满分10分计算，0.5分为一级，不满0.5按0.5计算
+    var star = (result - Math.floor(result)) > 0.5 ? Math.ceil(result) : Math.floor(result) + 0.5;
 
 ### 参与方式
 
